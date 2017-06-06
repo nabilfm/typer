@@ -12,3 +12,6 @@ Pertanyaan:
 5. Ketika ukuran window dirubah, susunan huruf yang 'terbentur' batas window menjadi tidak 1 baris. Benarkan.    
 6. Implementasikan sistem score.   
 7. Implementasikan hukuman berupa pengurangan nilai bila salah ketik.
+
+Jawaban:
+https://github.com/nabilfm/typer/blob/master/answerTest.js
