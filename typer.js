@@ -72,8 +72,8 @@ var TyperView = Backbone.View.extend({
 				'border-radius':'4px',
 				position:'absolute',
 				bottom:'0',
-				'min-width':'80%',
-				width:'80%',
+				'min-width':'60%',
+				width:'60%',
 				'margin-bottom':'10px',
 				'z-index':'1000'
 			}).keyup(function() {
