@@ -86,6 +86,7 @@ var TyperView = Backbone.View.extend({
 						word.set({highlight:typed_string.length});
 						if(typed_string.length == string.length) {
 							$(this).val('');
+                            self.model.defaults.score+=5;
 						}
 					} else {
 						word.set({highlight:0});
@@ -133,6 +134,15 @@ var TyperView = Backbone.View.extend({
             .click(function(){
                 self.model.start();
             });
+        var score_wrapper = $('<div>')
+			.css({
+				position: 'absolute',
+				right: '40px',
+				bottom: '20px',
+				'z-index': 999
+			});
+        var score = $('<strong>')
+			.html('Score : <span id="scores">' + self.model.defaults.score + '</span>');
 
         $(this.el)
             .append(wrapper
@@ -149,6 +159,8 @@ var TyperView = Backbone.View.extend({
                     .append(stop_btn)
                     .append(pause_btn)
                     .append(resume_btn))
+				.append(score_wrapper
+					.append(score))
             );
 		
 		text_input.css({left:((wrapper.width() - text_input.width()) / 2) + 'px'});
@@ -160,8 +172,10 @@ var TyperView = Backbone.View.extend({
 	render: function() {
 		var model = this.model;
 		var words = model.get('words');
-		
-		for(var i = 0;i < words.length;i++) {
+
+        $('#scores').text(model.defaults.score);
+
+        for(var i = 0;i < words.length;i++) {
 			var word = words.at(i);
 			if(!word.get('view')) {
 				var word_view_wrapper = $('<div>');
@@ -185,7 +199,8 @@ var Typer = Backbone.Model.extend({
 		min_distance_between_words:50,
 		words:new Words(),
 		min_speed:1,
-		max_speed:5
+		max_speed:5,
+		score: 0
 	},
 	
 	initialize: function() {
