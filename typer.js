@@ -84,12 +84,18 @@ var TyperView = Backbone.View.extend({
 					var string = word.get('string');
 					if(string.toLowerCase().indexOf(typed_string.toLowerCase()) == 0) {
 						word.set({highlight:typed_string.length});
-						if(typed_string.length == string.length) {
+                        self.model.defaults.temp_typed_string = typed_string;
+                        if(typed_string.length == string.length) {
 							$(this).val('');
                             self.model.defaults.score+=5;
 						}
 					} else {
 						word.set({highlight:0});
+                        if (self.model.defaults.temp_typed_string !== '') {
+                            if (string.toLowerCase().indexOf(self.model.defaults.temp_typed_string.toLowerCase()) == 0) {
+                                self.model.defaults.score-=5;
+                            }
+                        }
 					}
 				}
 			});
@@ -200,7 +206,8 @@ var Typer = Backbone.Model.extend({
 		words:new Words(),
 		min_speed:1,
 		max_speed:5,
-		score: 0
+		score: 0,
+		temp_typed_string: ''
 	},
 	
 	initialize: function() {
