@@ -92,17 +92,64 @@ var TyperView = Backbone.View.extend({
 					}
 				}
 			});
-		
-		$(this.el)
-			.append(wrapper
-				.append($('<form>')
-					.attr({
-						role:'form'
-					})
-					.submit(function() {
-						return false;
-					})
-					.append(text_input)));
+
+        var btn_wrapper = $('<div>')
+            .css({
+                position: 'absolute',
+                bottom: '20px',
+                'z-index': '9999'
+            });
+
+        var start_btn = $('<button>')
+            .addClass('btn btn-success')
+            .text('Start')
+            .css({display: 'none'})
+            .click(function(){
+                self.model.start();
+                $(this).css({display: 'none'});
+                stop_btn.css({display: 'inline'});
+            });
+        var stop_btn = $('<button>')
+            .addClass('btn btn-danger')
+            .text('Stop')
+            .click(function(){
+                self.model.stop();
+                $(this).css({display: 'none'});
+                start_btn.css({display: 'inline'});
+                $('.word').remove();
+                self.model.defaults.score = 0;
+            });
+        var pause_btn = $('<button>')
+            .addClass('btn btn-default')
+            .text('Pause')
+            .css({'margin-left': '5px'})
+            .click(function(){
+                self.model.stop();
+            });
+        var resume_btn = $('<button>')
+            .addClass('btn btn-default')
+            .text('Resume')
+            .css({'margin-left': '5px'})
+            .click(function(){
+                self.model.start();
+            });
+
+        $(this.el)
+            .append(wrapper
+                .append($('<form>')
+                    .attr({
+                        role:'form'
+                    })
+                    .submit(function() {
+                        return false;
+                    })
+                    .append(text_input))
+                .append(btn_wrapper
+                    .append(start_btn)
+                    .append(stop_btn)
+                    .append(pause_btn)
+                    .append(resume_btn))
+            );
 		
 		text_input.css({left:((wrapper.width() - text_input.width()) / 2) + 'px'});
 		text_input.focus();
@@ -151,10 +198,15 @@ var Typer = Backbone.Model.extend({
 	start: function() {
 		var animation_delay = 30;
 		var self = this;
-		setInterval(function() {
+		self.iterateInterval = setInterval(function() {
 			self.iterate();
 		},animation_delay);
 	},
+
+    stop: function () {
+        var self = this;
+        clearInterval(self.iterateInterval);
+    },
 	
 	iterate: function() {
 		var words = this.get('words');
