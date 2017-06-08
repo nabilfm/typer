@@ -45,7 +45,7 @@ var Test = {
     dua: {
         Q: 'Aplikasi itu \'laggy\'. Kenapa? Bagaimana cara membuat animasi lebih \'smooth\'?',
         A: 'Aplikasi tersebut \'laggy\' karena delay pada fungsi interval untuk menggeser kata2, terlalu besar. agar animasi lebih smooth, value dirubah menjadi lebih kecil dari 100 (diusahakan kurang dari setengahnya, yaitu 30) ' +
-            'https://github.com/nabilfm/typer/commit/d80df491432b9b101600fe5457dcf0caac2689d0'
+            'https://github.com/nabilfm/typer/commit/422a378f5ca3a66090e7bf11cc67eedacc160237'
     },
     tiga: {
         Q: 'Aplikasi itu tidak akan jalan di salah satu 3 browser populer (Chrome, Firefox, Internet Explorer)? Kenapa? Solusinya hanya menghapus satu character di code, character yang mana?',
